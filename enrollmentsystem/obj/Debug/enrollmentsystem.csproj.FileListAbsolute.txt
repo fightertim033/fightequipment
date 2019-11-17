@@ -1,0 +1,6 @@
+C:\Users\User\source\repos\enrollmentsystem\bin\Debug\enrollmentsystem.exe.config
+C:\Users\User\source\repos\enrollmentsystem\bin\Debug\enrollmentsystem.exe
+C:\Users\User\source\repos\enrollmentsystem\bin\Debug\enrollmentsystem.pdb
+C:\Users\User\source\repos\enrollmentsystem\obj\Debug\enrollmentsystem.csprojAssemblyReference.cache
+C:\Users\User\source\repos\enrollmentsystem\obj\Debug\enrollmentsystem.exe
+C:\Users\User\source\repos\enrollmentsystem\obj\Debug\enrollmentsystem.pdb
