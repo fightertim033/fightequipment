@@ -1,0 +1,4 @@
+Quijano;Chicky;S;19;12;HUMMS:full
+Villegas;Kim Carlo;L;19;12;ICT:full
+Garcia;Timothy;C;18;12;ICT:full
+Malabanan;Shakira;M;18;12;GAS:full
