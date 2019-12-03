@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Security;
 
 namespace enrollmentsystemv2
 {
@@ -76,6 +77,7 @@ namespace enrollmentsystemv2
                 Console.WriteLine("++++++'Find'++++++");
                 Console.WriteLine("1. Show all data ");
                 Console.WriteLine("2. Find specific data ");
+                Console.WriteLine("3. Return to main menu ");
                 Console.Write("Please enter desired action: ");
                 choice = Console.ReadLine();
 
@@ -86,6 +88,11 @@ namespace enrollmentsystemv2
                 else if (choice == "2")
                 {
                     showspecific();
+                }
+                else if (choice == "3")
+                {
+                    Console.Clear();
+                    Menu();
                 }
                 else
                 {
@@ -108,6 +115,7 @@ namespace enrollmentsystemv2
         }
         public static void Update()
         {
+            Console.Clear();
             Console.WriteLine("Please enter the id of the student data to be updated: ");
             int id = Convert.ToInt32(Console.ReadLine());
 
@@ -149,6 +157,7 @@ namespace enrollmentsystemv2
         }
         public static void Delete()
         {
+            Console.Clear();
             Console.WriteLine("Please enter the id to delete: ");
             int line_to_delete = Convert.ToInt32(Console.ReadLine());
             string line = null;
@@ -174,8 +183,9 @@ namespace enrollmentsystemv2
         }
         public static void Insert()
         {
+            Console.Clear();
             var lineCount = File.ReadLines("db.txt").Count();
-            
+
             Console.WriteLine("Please enter the following data: ");
             Console.Write("First Name: ");
             string fname = Console.ReadLine();
@@ -211,7 +221,7 @@ namespace enrollmentsystemv2
             Console.Clear();
 
         }
-        public static void Main(string[] args)
+        public static void Menu()
         {
 
             string choice;
@@ -225,44 +235,118 @@ namespace enrollmentsystemv2
                 Console.WriteLine("||2. Remove student        ||");
                 Console.WriteLine("||3. Update student        ||");
                 Console.WriteLine("||4. Find student          ||");
-                Console.WriteLine("||5. Exit program          ||");
+                Console.WriteLine("||5. Logout                ||");
+                Console.WriteLine("||6. Exit program          ||");
                 Console.WriteLine("+===========================+");
                 Console.Write("Please enter desired action (1-5): ");
                 choice = Console.ReadLine();
 
-                    if (choice == "1")
-                    {
-                        Insert();
-                    }
-                    if (choice == "2")
-                    {
-                        Delete();
-                    }
-                    else if (choice == "3")
-                    {
-                        Update();
+                if (choice == "1")
+                {
+                    Insert();
+                }
+                if (choice == "2")
+                {
+                    Delete();
+                }
+                else if (choice == "3")
+                {
+                    Update();
 
-                    }
-                    else if (choice == "4")
-                    {
-                        Find();
-                    }
-                    else if (choice == "5") 
-                    {
-                        Console.WriteLine("Terminating program. Please any key to exit...");
-                        Console.ReadLine();
-                        Environment.Exit(0);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid choice.");
-                        Console.WriteLine("Press any key to continue...");
-                        Console.ReadKey(true);
-                        Console.Clear();
-                    }
+                }
+                else if (choice == "4")
+                {
+                    Find();
+                }
+                else if (choice == "5") 
+                {
+
+                    form();
+
+                }
+                else if (choice == "6")
+                {
+                    Console.WriteLine("Terminating program. Please any key to exit...");
+                    Console.ReadLine();
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid choice.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey(true);
+                    Console.Clear();
+                }
 
             } while (choice != "1" || choice != "2" || choice != "3" || choice != "4" || choice != "5");
 
+        }
+        private static SecureString pass()
+        {
+            
+            SecureString password = new SecureString();
+            ConsoleKeyInfo input;
+
+            do
+            {
+                input = Console.ReadKey(true);
+                if (!char.IsControl(input.KeyChar))
+                {
+
+                    password.AppendChar(input.KeyChar);
+                    Console.Write("*");
+
+                }
+                else
+                {
+                    if (input.Key == ConsoleKey.Backspace && password.Length > 0)
+                    {
+                        // Remove last charcter if Backspace is Pressed
+                        password = password.Substring(0, (password.Length - 1));
+                        Console.Write("\b \b");
+                    }
+                }
+            } 
+            while (input.Key != ConsoleKey.Enter);
+            {
+
+                return password;
+
+            }
+        }
+
+        public static void form()
+        {
+            string username;
+            string Password;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("******ENROLLMENT SYSTEM******");
+                Console.Write("username: ");
+                username = Console.ReadLine();
+                Console.Write("password: ");
+                SecureString password = pass();
+                Password = new System.Net.NetworkCredential(string.Empty, password).Password;
+
+
+                if (username == "user" && Password == "root")
+                {
+                    Console.Clear();
+                    Menu();
+                }
+                else
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("invalid username or password...");
+                    Console.ReadLine();
+                }
+            }
+            while (username != "user" && Password != "root");
+        }
+        public static void Main(string[] args)
+        {
+            form();
         }
     }
 }
